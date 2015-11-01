@@ -1,16 +1,21 @@
 ﻿<link rel="stylesheet" href="css/login.css">
-<div class="container">
-    <div class="login">
-        <h2>TaskTrack</h2>
-        <label for="inputEmail" class="sr-only">User Name</label>
-        <input type="text" id="inpUserName" class="form-control" placeholder="User Name" ng-model="login.name" required autofocus="">
-        <label for="inpPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="login.password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
+<form name="formLogin">
+
+    <div class="container">
+        <div class="login">
+            <h2>TaskTrack</h2>           
+            <input type="text" id="inpUserName" class="form-control" placeholder="User Name" ng-model="login.name" required autofocus="">
+           
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="login.password" required>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me" ng-model="login.rememberme"> Remember me
+                </label>
+            </div>
+            <input class="btn btn-lg btn-primary btn-block" type="submit" ng-click="formLogin.$valid && doLogin(login)" value=" Sign in" />
+               
+            
+           
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="doLogin(login)">Sign in</button>
     </div>
-</div>
+</form>
