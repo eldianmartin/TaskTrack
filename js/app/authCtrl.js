@@ -3,7 +3,7 @@
     $scope.login = {};
     $scope.signup = {};
     $scope.doLogin = function (customer) {
-        Data.post('?action=login', customer).then(function (results) {
+        Data.post('login', customer).then(function (results) {
             Data.toast(results);
             if (results.status == "success") {
                 $location.path('dashboard');
