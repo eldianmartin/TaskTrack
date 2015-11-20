@@ -1,0 +1,32 @@
+﻿<div class="row">
+    <div class="col-sm-9">
+        <form name="formLogin">
+            <input type="text" class="form-control" placeholder="User Name" ng-model="filter.name" required autofocus="">
+            <input type="submit" value="" ng-hide="true" ng-click="binddata(filter)" />
+        </form>
+        <nav class="navbar ">
+            <ul class="nav navbar-left">
+                <li><a class="btn btn-default" href="#user/create" role="button">Create</a></li>
+            </ul>
+        </nav>
+        
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>group</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.group}}</td>                    
+                </tr>
+                
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
