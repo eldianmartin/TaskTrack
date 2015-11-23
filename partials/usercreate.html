@@ -27,17 +27,19 @@
                             <h4>Group</h4>
                         </div>
                         <div class="col-sm-6">
-                            <select select-user-type name="type_id" ng-model="user.type_id" ng-options="option.value for option in options track by option.key"></select>
-
+                            <select ng-model="user.group_id">
+                                <option ng-repeat="usergroup in usergroups" value="{{usergroup.id}}">{{usergroup.name}}</option>
+                            </select>
+                            
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
-                            <input class="btn btn-default" type="submit" ng-click="formUser.$valid && createuser(user)" value=" Create" />
+                        <div class="col-sm-4">
+                            <input class="btn btn-default form-control" type="submit" ng-click="formUser.$valid && createuser(user)" value="{{formtype}}" />
 
                         </div>
-                        <div class="col-sm-3">
-                            <a class="btn btn-default" href="#user">Cancel</a>
+                        <div class="col-sm-4">
+                            <a class="btn btn-default form-control" href="#user">Cancel</a>
                         </div>
                     </div>
                 </form>

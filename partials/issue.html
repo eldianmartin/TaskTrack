@@ -1,1 +1,50 @@
-﻿
+﻿<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Title</h4>
+            <input type="text" class="form-control">
+            <h4>Customer</h4>
+            <select class="form-control">
+                <option></option>
+            </select>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>From</h4>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="col-sm-6">
+                    <h4>To</h4>
+                    <input type="date" class="form-control" />
+                </div>
+            </div>
+
+            <h4>Programer</h4>
+            <select class="form-control">
+                <option></option>
+            </select>
+            <h4>Tester</h4>
+            <select class="form-control">
+                <option></option>
+            </select>
+            <h4>Priority</h4>
+            <select class="form-control">
+                <option></option>
+            </select>
+            <h4>State</h4>
+            <select class="form-control">
+                <option></option>
+            </select>
+            <br />
+            <input class="btn btn-lg btn-primary btn-block" type="submit" ng-click="formLogin.$valid && doLogin(login)" value=" Filter" />
+        </div>
+        <div class="col-sm-8">
+            <nav class="navbar ">
+                <ul class="nav navbar-right">
+                    <li><a class="btn btn-default" href="#issue/create" role="button">Create</a></li>
+                </ul>
+            </nav>
+           
+
+        </div>
+    </div>
+</div>

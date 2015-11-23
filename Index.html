@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TaskTrack</title>   
     <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <link rel="stylesheet" href="css/master.css">
 	<link rel="stylesheet" href="css/toaster.min.css">
 </head>
 <body>
@@ -14,9 +15,7 @@
                 <a class="navbar-brand" href="#">Task Track</a>
             </div>
             <ul class="nav navbar-nav  navbar-right">
-                <li ng-class="{Active: activetab == 'issue'}"><a href="#issue">Issue</a></li>
-                <li ng-class="{Active: activetab == 'report'}"><a href="#report">Report</a></li>
-                <li ng-class="{Active: activetab == 'user'}"><a href="#user">User</a></li>
+                <li ng-repeat="link in links" ng-class="{Active: activetab == '{{link.name}}'}"><a href="#{{link.name}}">{{link.name}}</a></li>               
                 <li><a href="#" ng-click="logout()">LogOut</a></li>
             </ul> 
         </div>
@@ -34,6 +33,7 @@
 <script src="js/app/data.js"></script>
 <script src="js/app/loginCtrl.js"></script>
 <script src="js/app/issueCtrl.js"></script>
+<script src="js/app/issuecreateCtrl.js"></script>
 <script src="js/app/userCtrl.js"></script>
 <script src="js/app/usercreateCtrl.js"></script>
 </html>

@@ -1,0 +1,44 @@
+﻿<form name="formIssue">
+    <div class="row">
+        <div class="col-sm-9">
+            <h4>Title</h4>
+            <input type="text" class="form-control" ng-model="issue.title" required>
+            <h4>Description</h4>
+            <textarea class="form-control" ng-model="issue.description"></textarea>
+            <div class="row top10">
+                <div class="col-sm-2">
+                    <input class="btn btn-default form-control" type="submit" ng-click="formIssue.$valid && createissue(issue)" value="{{formtype}}" />
+
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-default form-control" href="#issue">Cancel</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <h4>Customer</h4>
+            <select class="form-control" ng-model="issue.customer_id">
+                <option value="">Unassigned</option>
+                <option ng-repeat="customer in customers" value="{{customer.id}}">{{customer.name}}</option>
+            </select>
+            <h4>Programer</h4>
+            <select class="form-control" ng-model="issue.programer_id">
+                <option value="">Unassigned</option>
+                <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
+            </select>
+            <h4>Tester</h4>
+            <select class="form-control" ng-model="issue.tester_id">
+                <option value="">Unassigned</option>
+                <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
+            </select>
+            <h4>Priority</h4>
+            <select class="form-control" ng-model="issue.priority">
+                <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
+            </select>
+            <h4>State</h4>
+            <select class="form-control" ng-model="issue.state">
+                <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+            </select>
+        </div>
+    </div>
+</form>
