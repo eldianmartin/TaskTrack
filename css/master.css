@@ -11,3 +11,10 @@
 .bot15 { margin-bottom:15px; }
 .bot17 { margin-bottom:17px; }
 .bot30 { margin-bottom:30px; }
+
+.panel-issue select{
+    padding:0px;
+}
+.panel-issue .row > div{
+    padding:0px 3px;
+}

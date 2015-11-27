@@ -1,41 +1,58 @@
 ﻿<div class="container">
     <div class="row">
         <div class="col-sm-4">
-            <h4>Title</h4>
-            <input type="text" class="form-control">
-            <h4>Customer</h4>
-            <select class="form-control">
-                <option></option>
-            </select>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h4>From</h4>
-                    <input type="date" class="form-control" />
-                </div>
-                <div class="col-sm-6">
-                    <h4>To</h4>
-                    <input type="date" class="form-control" />
-                </div>
-            </div>
+            <form>
+                <h4>Title</h4>
+                <input type="text" class="form-control" ng-model="filter.title">
+                <h4>Customer</h4>
+                <select class="form-control" ng-model="filter.customer_id">
+                    <option value="">All</option>
+                    <option value="null">Unassigned</option>
+                    <option ng-repeat="customer in customers" value="{{customer.id}}">{{customer.name}}</option>
+                </select>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>From</h4>
+                        <datepicker date-format="dd MMM yyyy">
+                            <input ng-model="filter.from" type="text" />
+                        </datepicker>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>To</h4>
+                        <datepicker date-format="dd MMM yyyy">
+                            <input ng-model="filter.to" type="text" />
+                        </datepicker>
 
-            <h4>Programer</h4>
-            <select class="form-control">
-                <option></option>
-            </select>
-            <h4>Tester</h4>
-            <select class="form-control">
-                <option></option>
-            </select>
-            <h4>Priority</h4>
-            <select class="form-control">
-                <option></option>
-            </select>
-            <h4>State</h4>
-            <select class="form-control">
-                <option></option>
-            </select>
-            <br />
-            <input class="btn btn-lg btn-primary btn-block" type="submit" ng-click="formLogin.$valid && doLogin(login)" value=" Filter" />
+                    </div>
+                </div>
+                <div ng-if="fullfilter">
+                    <h4>Programer</h4>
+                    <select class="form-control" ng-model="filter.programer_id">
+                        <option value="">All</option>
+                        <option value="null">Unassigned</option>
+                        <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
+                    </select>
+                    <h4>Tester</h4>
+                    <select class="form-control" ng-model="filter.tester_id">
+                        <option value="">All</option>
+                        <option value="null">Unassigned</option>
+                        <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
+                    </select>
+                    <h4>Priority</h4>
+                    <select class="form-control" ng-model="filter.priority">
+                        <option value="">All</option>
+                        <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
+                    </select>
+                </div>
+                <h4>State</h4>
+                <select class="form-control" ng-model="filter.state">
+                    <option value="">All</option>
+                    <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+                </select>
+                <br />
+                <input type="submit" class="form-control btn-primary" ng-click="filterupdate(filter)" />
+            </form>
+
         </div>
         <div class="col-sm-8">
             <nav class="navbar ">
@@ -43,7 +60,50 @@
                     <li><a class="btn btn-default" href="#issue/create" role="button">Create</a></li>
                 </ul>
             </nav>
-           
+            <div class="panel panel-default" ng-repeat="issue in issues">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <a href="#issueedit/{{issue.id}}">{{issue.title}}</a>
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            Created by: {{issue.creatorname}}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body panel-issue">
+                    <div class="row">
+                        <div class="col-sm-2" ng-if="fullfilter">
+                            <select class="form-control" ng-model="issue.priority" ng-change="update(issue)" ng-disabled="!updatepriority">
+                                <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select class="form-control" ng-model="issue.state" ng-change="update(issue)" ng-disabled="!updatestate">
+                                <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select class="form-control" ng-model="issue.customer_id" ng-change="update(issue)" ng-disabled="!updatecustomer">
+                                <option value="">Unassigned</option>
+                                <option ng-repeat="customer in customers" value="{{customer.id}}">{{customer.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" ng-if="fullfilter">
+                            <select class="form-control" ng-model="issue.programer_id" ng-change="update(issue)" ng-disabled="!updateprogramer">
+                                <option value="">Unassigned</option>
+                                <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" ng-if="fullfilter">
+                            <select class="form-control" ng-model="issue.tester_id" ng-change="update(issue)" ng-disabled="!updatetester">
+                                <option value="">Unassigned</option>
+                                <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

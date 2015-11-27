@@ -9,13 +9,26 @@
     Data.post('getcustomers', {}).then(function (results) {
         $rootScope.customers = results;
     });
-   
     $scope.issue = { state: "1", priority: "1" };
+    
+    if (!$rootScope.group_id) {
+        Data.post('session', {}).then(function (results) {
+            if (results.group_id == 7) {
+                $scope.issue.customer_id = $rootScope.id;
+            }
+        });
+    }
+    else {
+        if ($rootScope.group_id == 7) {
+            $scope.issue.customer_id = $rootScope.id;
+        }
+    }
+   
     $scope.formtype = "Create";
-    if ($routeParams.userid != undefined) {
+    if ($routeParams.issueid != undefined) {
         $scope.formtype = "Edit";
-        Data.post('getuserbyid', $routeParams.userid).then(function (results) {
-            $scope.user = results;
+        Data.post('getissuebyid', $routeParams.issueid).then(function (results) {
+            $scope.issue = results;
         });
     }
     $scope.createissue = function (issue) {
@@ -27,7 +40,7 @@
                 }
             });
         } else {
-            Data.post('editissue', issue).then(function (results) {
+            Data.post('updateissue', issue).then(function (results) {
                 Data.toast(results);
                 if (results.status == "success") {
                     $location.path('/issue');

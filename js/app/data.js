@@ -27,6 +27,6 @@
                 return results.data;
             });
         };
-
+        
         return obj;
     }]);

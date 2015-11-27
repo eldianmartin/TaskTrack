@@ -154,7 +154,31 @@ function getprogramers($obj){
     return $User->getbytype(4);
   
 }
-
+function getissues($obj){
+   $issue = new issue();        
+    return $issue->getall();
+  
+}
+function updateissue($obj){
+    try {
+    $issue =new issue();	
+    $issue->id = isset($obj->id)?$obj->id:'';
+    $issue->title = isset($obj->title)?$obj->title:'';
+	  $issue->description = isset($obj->description)?$obj->description:'';
+	  $issue->customer_id = isset($obj->customer_id) && $obj->customer_id!="0" ?$obj->customer_id:'null';
+    $issue->programer_id = isset($obj->programer_id) && $obj->programer_id!="0"?$obj->programer_id:'null';
+    $issue->tester_id = isset($obj->tester_id) && $obj->tester_id!="0"?$obj->tester_id:'null';
+    $issue->state = isset($obj->state)?$obj->state:1;
+    $issue->priority = isset($obj->priority)?$obj->priority:1;
+    $issue->modifier = isset($_SESSION['id'] )?$_SESSION['id'] :'null';
+    $issue->update();
+     return array("status" => "success", "msg" =>"Issue updated");		
+  }catch (Exception $e) {			
+    return array("status" => "warning", "msg" =>$e->getMessage());		
+		
+  } 
+  
+}
 
 function createissue($obj){
   try {
@@ -167,7 +191,6 @@ function createissue($obj){
     $issue->state = isset($obj->state)?$obj->state:1;
     $issue->priority = isset($obj->priority)?$obj->priority:1;
     $issue->creator = isset($_SESSION['id'] )?$_SESSION['id'] :'null';
-    $issue->created = isset($obj->priority)?$obj->priority:1;
     $id = $issue->insert();
     if(isset($id)){
       return array("status" => "success", "msg" => "Create Successful");			
@@ -179,6 +202,19 @@ function createissue($obj){
 		
   } 
 }
+function getissuebyid($obj){
+  $issue =new issue();	
+   $list = $issue->getbyid($obj);
+	  if(count($list)>0){	    
+	    return $list[0];
+	   
+    }else{
+       return "";
+    }		
+ 
+}
+
+
 /* Output header */
 header('Content-type: application/json');
 echo json_encode($result);
