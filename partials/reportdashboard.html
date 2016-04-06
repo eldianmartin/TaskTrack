@@ -1,0 +1,35 @@
+﻿<div class="row">
+    <div class="col-sm-4">
+        <ul class="statepicker">
+            <li ng-repeat="statereport in statereports">
+                <button class="form-control btn-lg btn{{statereport.id}}" ng-click="updatestate(statereport.id)">
+                    {{statereport.issuecount}}
+                    {{statereport.name}}
+                </button>
+            </li>
+        </ul>
+
+    </div>
+    <div class="col-sm-8">
+        <h2>{{title}}</h2>
+        <br />
+        <button class="btn btn-default"
+                ng-csv="getCSV()" csv-header="getHeader()" filename="{{ title }}.csv" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}">
+            Export to CSV
+        </button>
+        <br /><br />
+        <div class="panel panel-default" ng-repeat="issue in issues">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <a href="#issueedit/{{issue.id}}">{{issue.title}}</a>
+                    </div>
+                    <div class="col-sm-5 text-right">
+                        Created by: {{issue.creatorname}}, {{issue.created}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

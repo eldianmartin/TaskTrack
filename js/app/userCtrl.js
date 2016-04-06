@@ -18,20 +18,22 @@
         angular.forEach(selected, function (user) {
             listUserID.push(user.id);
         });
-        Data.post('deleteuser', listUserID).then(function (results) {
-            Data.toast(results);
-            $scope.users = unselected;
-        });
+        if (confirm("Press a button!")) {
+            Data.post('deleteuser', listUserID).then(function (results) {
+                Data.toast(results);
+                $scope.users = unselected;
+            });
+        }
     }
     $scope.tooglecheckall = function (checkall) {
-        var filtered = $filter('filter')($scope.users, $scope.searchtext);       
+        var filtered = $filter('filter')($scope.users, $scope.searchtext);
         angular.forEach(filtered, function (user) {
             user.selected = checkall;
         });
         $scope.selected = $filter('filter')($scope.users, { selected: true }).length;
 
     }
-    $scope.tooglecheck = function () {       
+    $scope.tooglecheck = function () {
         $scope.selected = $filter('filter')($scope.users, { selected: true }).length;
     }
 

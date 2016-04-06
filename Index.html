@@ -3,10 +3,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TaskTrack</title>   
-    <link rel="stylesheet" href="css/bootstrap.min.css">    
+    <title>TaskTrack</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/master.css">
-	<link rel="stylesheet" href="css/toaster.min.css">
+    <link rel="stylesheet" href="css/toaster.min.css">
     <link href="css/angular-datepicker.css" rel="stylesheet" />
 </head>
 <body>
@@ -16,12 +16,21 @@
                 <a class="navbar-brand" href="#">Task Track</a>
             </div>
             <ul class="nav navbar-nav  navbar-right">
-                <li ng-repeat="link in links" ng-class="{Active: activetab == '{{link.name}}'}"><a href="#{{link.name}}">{{link.name}}</a></li>               
+                <li ng-repeat="link in links" ng-class="{Active: activetab == '{{link.name}}'}"><a href="#{{link.link}}">{{link.name}}</a></li>
                 <li><a href="#" ng-click="logout()">LogOut</a></li>
-            </ul> 
+            </ul>
         </div>
     </nav>
+
+
+
     <div class="container" style="margin-top:20px;">
+        <div class="row navbar-default">
+            <ul class="nav navbar-nav">
+                <li ng-repeat="sublink in sublinks" ng-class="{Active: activesubtab == '{{sublink.name}}'}"><a href="#{{sublink.link}}">{{sublink.name}}</a></li>
+            </ul>
+        </div>
+        
         <div data-ng-view="" id="ng-view" class="slide-animation"></div>
     </div>
 </body>
@@ -31,6 +40,8 @@
 <script src="js/angular-animate.min.js"></script>
 <script src="js/toaster.min.js"></script>
 <script src="js/angular-datepicker.js"></script>
+<script src="js/angular-sanitize.min.js"></script>
+<script src="js/ng-csv.js"></script>
 <script src="js/app/app.js"></script>
 <script src="js/app/data.js"></script>
 <script src="js/app/loginCtrl.js"></script>
@@ -38,4 +49,8 @@
 <script src="js/app/issuecreateCtrl.js"></script>
 <script src="js/app/userCtrl.js"></script>
 <script src="js/app/usercreateCtrl.js"></script>
+<script src="js/app/reportdashboardCtrl.js"></script>
+<script src="js/app/reporttopcustomerCtrl.js"></script>
+<script src="js/app/reporttopprogramerCtrl.js"></script>
+<script src="js/app/reportbugagingCtrl.js"></script>
 </html>

@@ -6,6 +6,9 @@
             if (results.status == "success") {
                 $location.path('issue');
             }
+            else {
+                $scope.login.password = '';
+            }
         });
     };
    

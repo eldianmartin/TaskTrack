@@ -9,6 +9,10 @@
     Data.post('getcustomers', {}).then(function (results) {
         $rootScope.customers = results;
     });
+    
+   
+    
+    
     var issues = [];
     Data.post('getissues', {}).then(function (results) {
         issues = results;
@@ -22,6 +26,8 @@
         });
     }
     $scope.filter = { title: "", customer_id: "", from: "", to: "", programer_id: "", tester_id: "", state: "", priority: "" }
+   
+  
     $scope.filterupdate = function (filter) {
         var filterIssue = issues;
         if (filter != undefined) {
@@ -36,6 +42,17 @@
         }
         $scope.issues = filterIssue;
     }
+    Data.post('session', {}).then(function (results) {
+        if (results.group_id == "4") {
+            $scope.filter.programer_id = $rootScope.id;
+            $scope.filterupdate($scope.filter);
+            $scope.disabledeveloperfilter = true;
+        } else if (results.group_id == "5") {
+            $scope.filter.tester_id = $rootScope.id;
+            $scope.filterupdate($scope.filter);
+            $scope.disabletesterfilter = true;
+        }
+    });
 });
 app.filter('issuefilter', function () {
     return function (items, filter) {
@@ -73,12 +90,14 @@ app.filter('issuefilter', function () {
             }
             var matchFrom= true;
             if (IsNotEmpty(filter.from)) {
-                matchFrom = new Date(filter.from) <= DateOnly(new Date(item.created));
+                var createddate = item.created.split(" ")[0];
+                matchFrom = new Date(filter.from) <= DateOnly(new Date(createddate));
 
             }
             var matchTo= true;
             if (IsNotEmpty(filter.to)) {
-                matchTo = new Date(filter.to) >= DateOnly(new Date(item.created));
+                var createddate = item.created.split(" ")[0];
+                matchTo = new Date(filter.to) >= DateOnly(new Date(createddate));
 
             }
             if (matchProgramer && matchCustomer && matchTester && matchPriority && matchState && matchFrom && matchTo) {

@@ -46,7 +46,7 @@ class state{
     $Connection =new CreateConnection();
 	  $mysqli = $Connection->connectToDatabase();	
    
-		$SQL = "SELECT * FROM state";
+		$SQL = "SELECT * FROM state order by id asc";
 		
     $result =$mysqli->query("$SQL");	
     

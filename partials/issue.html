@@ -26,24 +26,29 @@
                     </div>
                 </div>
                 <div ng-if="fullfilter">
-                    <h4>Programer</h4>
-                    <select class="form-control" ng-model="filter.programer_id">
-                        <option value="">All</option>
-                        <option value="null">Unassigned</option>
-                        <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
-                    </select>
-                    <h4>Tester</h4>
-                    <select class="form-control" ng-model="filter.tester_id">
-                        <option value="">All</option>
-                        <option value="null">Unassigned</option>
-                        <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
-                    </select>
-                    <h4>Priority</h4>
-                    <select class="form-control" ng-model="filter.priority">
-                        <option value="">All</option>
-                        <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
-                    </select>
-                </div>
+                    <div ng-hide="disabledeveloperfilter">
+                        <h4>Developer</h4>
+                        <select class="form-control" ng-model="filter.programer_id">
+                            <option value="">All</option>
+                            <option value="null">Unassigned</option>
+                            <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
+                        </select>
+                    </div>
+                    <div ng-hide="disabletesterfilter">
+                        <h4>Tester</h4>
+                        <select class="form-control" ng-model="filter.tester_id" >
+                            <option value=" ">
+                            All</option>
+                            <option value="null">Unassigned</option>
+                            <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
+                        </select>
+                    </div>
+                        <h4>Priority</h4>
+                        <select class="form-control" ng-model="filter.priority">
+                            <option value="">All</option>
+                            <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
+                        </select>
+                    </div>
                 <h4>State</h4>
                 <select class="form-control" ng-model="filter.state">
                     <option value="">All</option>
@@ -63,11 +68,11 @@
             <div class="panel panel-default" ng-repeat="issue in issues">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <a href="#issueedit/{{issue.id}}">{{issue.title}}</a>
                         </div>
-                        <div class="col-sm-3 text-right">
-                            Created by: {{issue.creatorname}}
+                        <div class="col-sm-5 text-right">
+                            Created by: {{issue.creatorname}}, {{issue.created}}
                         </div>
                     </div>
                 </div>
@@ -79,8 +84,8 @@
                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <select class="form-control" ng-model="issue.state" ng-change="update(issue)" ng-disabled="!updatestate">
-                                <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+                            <select class="form-control" ng-model="issue.state" ng-change="update(issue)" ng-disabled="!updatestate ||(disabledeveloperfilter && issue.state!=1 && issue.state!=2 && issue.state!=3) ||(disabletesterfilter && issue.state!=3 && issue.state!=4)">
+                                <option ng-repeat="state in states" value="{{state.id}}" ng-disabled="(disabledeveloperfilter && state.id!=1 && state.id!=2 && state.id!=3) ||(disabletesterfilter && state.id!=3 && state.id!=4)">{{state.name}}</option>
                             </select>
                         </div>
                         <div class="col-sm-2">

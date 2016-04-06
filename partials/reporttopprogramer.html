@@ -1,0 +1,62 @@
+﻿<div class="row">
+    <div class="col-sm-4">
+        <form>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>From</h4>
+                    <datepicker date-format="dd MMM yyyy">
+                        <input ng-model="filter.from" type="text" />
+                    </datepicker>
+                </div>
+                <div class="col-sm-6">
+                    <h4>To</h4>
+                    <datepicker date-format="dd MMM yyyy">
+                        <input ng-model="filter.to" type="text" />
+                    </datepicker>
+
+                </div>
+            </div>
+            <br />
+            <input type="submit" class="form-control btn-primary" ng-click="gettopprogramer(filter)" />
+        </form>
+
+    </div>
+    <div class="col-md-8">
+        <br />
+        <button class="btn btn-default"
+                ng-csv="getCSV()" csv-header="getHeader()" filename="topprogramer.csv" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}">
+            Export to CSV
+        </button>
+        <br /><br />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="col-md-2">Rank</td>
+                    <th class="col-md-2">Developer</th>
+                    <th class="col-md-2">On Progress</th>
+                    <th class="col-md-2">Done</th>
+                    <th class="col-md-2">Rejected</th>
+                    <th class="col-md-2">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="programer in programers ">
+                    <td class="col-md-1">{{$index + 1}}</td>
+                    <td class="col-md-3">
+                        {{programer.name}}
+                    </td>
+                    <td class="col-md-2">
+                        {{programer.onprogress}}
+                    </td>
+                    <td class="col-md-2">
+                        {{programer.done}}
+                    </td>
+                    <td class="col-md-2">   {{programer.reject}}</td>
+                    <td class="col-md-2">   {{programer.total}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

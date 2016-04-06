@@ -213,8 +213,27 @@ function getissuebyid($obj){
     }		
  
 }
-
-
+function getstatereport($obj){
+  $issue =new issue();	
+  $list = $issue->getstatereport();
+  return $list;
+	
+}
+function gettopcustomer($obj){
+  $issue =new issue();	
+  $list = $issue->gettopcustomer($obj);
+  return $list;
+}
+function gettopprogramer($obj){
+ $issue =new issue();	
+  $list = $issue->gettopprogramer($obj);
+  return $list;
+}
+function getissueaging($obj){
+  $issue =new issue();	
+  $list = $issue->getaging();
+  return $list;
+}
 /* Output header */
 header('Content-type: application/json');
 echo json_encode($result);

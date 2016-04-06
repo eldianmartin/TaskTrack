@@ -15,30 +15,48 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3" ng-show="false">
-            <h4>Customer</h4>
-            <select class="form-control" ng-model="issue.customer_id">
-                <option value="">Unassigned</option>
-                <option ng-repeat="customer in customers" value="{{customer.id}}">{{customer.name}}</option>
-            </select>
-            <h4>Programer</h4>
-            <select class="form-control" ng-model="issue.programer_id">
-                <option value="">Unassigned</option>
-                <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
-            </select>
-            <h4>Tester</h4>
-            <select class="form-control" ng-model="issue.tester_id">
-                <option value="">Unassigned</option>
-                <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
-            </select>
-            <h4>Priority</h4>
-            <select class="form-control" ng-model="issue.priority">
-                <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
-            </select>
-            <h4>State</h4>
-            <select class="form-control" ng-model="issue.state">
-                <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
-            </select>
+        <div class="col-sm-3">
+            <div>
+                <h4>Customer</h4>
+                <select class="form-control" ng-model="issue.customer_id" ng-disabled="!updatecustomer">
+                    <option value="">Unassigned</option>
+                    <option ng-repeat="customer in customers" value="{{customer.id}}">{{customer.name}}</option>
+                </select>
+            </div>
+            <div ng-show="fullfilter">
+                <h4>Developer</h4>
+                <select class="form-control" ng-model="issue.programer_id" ng-disabled="!updateprogramer">
+                    <option value="">Unassigned</option>
+                    <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
+                </select>
+            </div>
+            <div ng-show="fullfilter">
+                <h4>Tester</h4>
+                <select class="form-control" ng-model="issue.tester_id" ng-disabled="!updatetester">
+                    <option value="">Unassigned</option>
+                    <option ng-repeat="tester in testers" value="{{tester.id}}">{{tester.name}}</option>
+                </select>
+            </div>
+            <div ng-show="fullfilter">
+                <h4>Priority</h4>
+                <select class="form-control" ng-model="issue.priority" ng-disabled="!updatepriority">
+                    <option ng-repeat="priority in priorities" value='{{priority.id}}'>{{priority.name}}</option>
+                </select>
+            </div>
+            <div>
+                <h4>State</h4>
+                <select class="form-control" ng-model="issue.state" ng-disabled="!updatestate">
+                    <option ng-repeat="state in states" value="{{state.id}}">{{state.name}}</option>
+                </select>
+            </div>
+            <div ng-show="issue.creator">
+               Creator:<br /> {{issue.creatorname}}, {{issue.created}}
+                
+            </div>
+            <div ng-show="issue.modifier">
+                Last Modifier:<br /> {{issue.modifiername}}, {{issue.modified}}
+
+            </div>
         </div>
     </div>
 </form>

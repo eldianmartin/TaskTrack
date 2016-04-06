@@ -1,0 +1,74 @@
+﻿<div class="row">
+    <div class="col-sm-4">
+        <form>            
+            <h4>Customer</h4>
+            <select class="form-control" ng-model="filter.customer_id">
+                <option value="">All</option>
+                <option value="null">Unassigned</option>
+                <option ng-repeat="customer in customers" value="{{customer.id}}">{{customer.name}}</option>
+            </select>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>From</h4>
+                    <datepicker date-format="dd MMM yyyy">
+                        <input ng-model="filter.from" type="text" />
+                    </datepicker>
+                </div>
+                <div class="col-sm-6">
+                    <h4>To</h4>
+                    <datepicker date-format="dd MMM yyyy">
+                        <input ng-model="filter.to" type="text" />
+                    </datepicker>
+
+                </div>
+            </div>
+
+            <h4>Developer</h4>
+            <select class="form-control" ng-model="filter.programer_id">
+                <option value="">All</option>
+                <option value="null">Unassigned</option>
+                <option ng-repeat="programer in programers" value="{{programer.id}}">{{programer.name}}</option>
+            </select>
+
+
+            <br />
+            <input type="submit" class="form-control btn-primary" ng-click="filterupdate(filter)" />
+        </form>
+
+    </div>
+    <div class="col-md-8">
+        <br />
+        <button class="btn btn-default"
+                ng-csv="getCSV()" csv-header="getHeader()" filename="bugaging.csv" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}">
+            Export to CSV
+        </button>
+        <br /><br />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="col-md-1">No</td>
+                    <th class="col-md-3">Customer</th>
+                    <th class="col-md-3">Developer</th>
+                    <th class="col-md-3">Bug</th>
+                    <th class="col-md-2">Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="issueaging in issueagings ">
+                    <td class="col-md-1">{{$index + 1}}</td>
+                    <td class="col-md-3">
+                        {{issueaging.customer_name}}
+                    </td>
+                    <td class="col-md-3">
+                        {{issueaging.programer_name}}
+                    </td>
+                    <td class="col-md-3">
+                        {{issueaging.title}}
+                    </td>
+                    <td class="col-md-2">   {{issueaging.days}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

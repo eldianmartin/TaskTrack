@@ -18,3 +18,33 @@
 .panel-issue .row > div{
     padding:0px 3px;
 }
+.statepicker {
+    margin:0px;
+    padding:0px;
+
+}
+.statepicker li {
+    list-style:none;
+   margin-top:20px;
+}
+.statepicker li button.btn1 {
+   border:2px solid green;
+}
+.statepicker li button.btn2 {
+   border:2px solid red;
+}
+.statepicker li button.btn3 {
+   border:2px solid black;
+}
+.statepicker li button.btn4 {
+   border:2px solid purple;
+}
+.statepicker li button.btn5 {
+   border:2px solid blue;
+}
+.statepicker li button.btn6 {
+   border:2px solid orange;
+}
+.statepicker li button.btn7 {
+   border:2px solid pink;
+}

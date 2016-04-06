@@ -1,4 +1,7 @@
-﻿var app = angular.module('myApp', ['ngRoute', 'ngAnimate', 'toaster', '720kb.datepicker']);
+﻿var reportSubLinks =  [{ 'name': "Dashboard", 'link': "reportdashboard" }, { 'name': "Top Customer", 'link': "reporttopcustomer" },
+            { 'name': "Top Developer", 'link': "reporttopprogramer" }, { 'name': "Bug Aging", 'link': "reportbugaging" }]
+
+var app = angular.module('myApp', ['ngRoute', 'ngAnimate', 'toaster', '720kb.datepicker', "ngSanitize", "ngCsv"]);
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
     when('/', {
@@ -17,7 +20,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         title: 'User',
         templateUrl: 'partials/user.html',
         controller: 'userCtrl',
-        activetab: 'user',
+        activetab: 'User',
         permissions: {
             only: ['user']
         }
@@ -26,7 +29,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         title: 'User',
         templateUrl: 'partials/usercreate.html',
         controller: 'usercreateCtrl',
-        activetab: 'user',
+        activetab: 'User',
         permissions: {
             only: ['user']
         }
@@ -35,38 +38,73 @@ app.config(['$routeProvider', function ($routeProvider) {
         title: 'User',
         templateUrl: 'partials/usercreate.html',
         controller: 'usercreateCtrl',
-        activetab: 'user',
+        activetab: 'User',
         permissions: {
             only: ['user']
         }
 
     })
-    .when('/report', {
+    .when('/reportdashboard', {
         title: 'Report',
-        templateUrl: 'partials/report.html',
-        controller: 'reportCtrl',
-        activetab: 'report',
+        templateUrl: 'partials/reportdashboard.html',
+        controller: 'reportdashboardCtrl',
+        activetab: 'Report',
         permissions: {
             only: ['user']
-        }
+        },
+        sublinks: reportSubLinks,
+        activesubtab: 'Dashboard',
+    })
+    .when('/reporttopcustomer', {
+        title: 'Report',
+        templateUrl: 'partials/reporttopcustomer.html',
+        controller: 'reporttopcustomerCtrl',
+        activetab: 'Report',
+        permissions: {
+            only: ['user']
+        },
+        sublinks: reportSubLinks,
+        activesubtab: 'Top Customer',
+    })
+    .when('/reporttopprogramer', {
+        title: 'Report',
+        templateUrl: 'partials/reporttopprogramer.html',
+        controller: 'reporttopprogramerCtrl',
+        activetab: 'Report',
+        permissions: {
+            only: ['user']
+        },
+        sublinks: reportSubLinks,
+        activesubtab: 'Top Developer',
+    })
+    .when('/reportbugaging', {
+        title: 'Report',
+        templateUrl: 'partials/reportbugaging.html',
+        controller: 'reportbugagingCtrl',
+        activetab: 'Report',
+        permissions: {
+            only: ['user']
+        },
+        sublinks: reportSubLinks,
+        activesubtab: 'Bug Aging',
     })
     .when('/issue', {
         title: 'Issue',
         templateUrl: 'partials/issue.html',
         controller: 'issueCtrl',
-        activetab: 'issue'
+        activetab: 'Issue'
     })
     .when('/issue/create', {
         title: 'Issue',
         templateUrl: 'partials/issuecreate.html',
         controller: 'issuecreateCtrl',
-        activetab: 'issue'
+        activetab: 'Issue'
     })
     .when('/issueedit/:issueid', {
         title: 'Issue',
         templateUrl: 'partials/issuecreate.html',
         controller: 'issuecreateCtrl',
-        activetab: 'issue',
+        activetab: 'Issue',
         permissions: {
             only: ['issueedit']
         }
@@ -76,7 +114,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         redirectTo: '/'
     });
 }]).run(function ($rootScope, $location, Data, $filter) {
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+    $rootScope.$on("$routeChangeStart", function (event, next) {
         Data.post('session', {}).then(function (results) {
             var nextUrl = next.$$route.originalPath;
             var nextpermissions = next.$$route.permissions;
@@ -100,10 +138,10 @@ app.config(['$routeProvider', function ($routeProvider) {
                 $rootScope.updatetester = $rootScope.role.indexOf('updatetester') != -1;
 
                 if ($rootScope.role.indexOf('user') != -1) {
-                    $rootScope.links = [{ 'name': 'issue' }, { 'name': 'report' }, { 'name': 'user' }];
+                    $rootScope.links = [{ 'name': 'Bug', 'link': 'issue' }, { 'name': 'Report', 'link': 'reportdashboard' }, { 'name': 'User', 'link': 'user' }];
 
                 } else {
-                    $rootScope.links = [{ 'name': 'issue' }];
+                    $rootScope.links = [{ 'name': 'Bug', 'link': 'issue' }];
                 }
                 if (nextpermissions != undefined) {
                     if (nextpermissions.only != undefined) {
@@ -150,9 +188,18 @@ function navigationcheck($scope, $location, $route) {
     } else {
         $scope.$parent.islogin = true;
     }
+    $scope.$parent.sublinks = [];
     if ($route != undefined) {
         $scope.$parent.activetab = $route.current.activetab;
+        if ($route.current.sublinks != undefined) {
+            $scope.$parent.sublinks = $route.current.sublinks;
+            if ($route != undefined) {
+                $scope.$parent.activesubtab = $route.current.activesubtab;
+            }
+        }
     }
+   
+   
 
 }
 function intersect(arr1, arr2) {
@@ -164,5 +211,23 @@ function IsNotEmpty(obj) {
     return obj != undefined && obj != "";
 }
 function DateOnly(obj) {
-    return new Date(obj.getFullYear(),obj.getMonth(), obj.getDate() );
+    return new Date(obj.getFullYear(), obj.getMonth(), obj.getDate());
+}
+function converttophpdate(dateString) {
+    var date = new Date(dateString);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    month = PadLeft(month, 2, "0");
+    var day = date.getDate();
+    day = PadLeft(day, 2, "0");
+    return year + "-" + month + "-" + day;
+
+}
+function PadLeft(value, width, padChar) {
+    var val = value.toString();
+    if (!padChar) { padChar = '0'; }
+    while (val.length < width) {
+        val = padChar + val;
+    }
+    return val;
 }

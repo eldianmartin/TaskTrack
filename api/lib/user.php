@@ -22,7 +22,7 @@ class user{
 	  $mysqli = $Connection->connectToDatabase();
 		$name=$mysqli->real_escape_string($name);
     $password=$mysqli->real_escape_string($password);
-		$SQL = "SELECT * FROM user WHERE name='".$name."' and password='". $password ."' ";
+		$SQL = "SELECT * FROM user WHERE name='".$name."' and BINARY(password)=BINARY('". $password ."') ";
 		
     $result =$mysqli->query("$SQL");	
     
